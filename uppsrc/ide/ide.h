@@ -654,6 +654,8 @@ public:
 	bool      prefer_clang_format = false;
 	bool      blk0_header = true;
 	bool      win_deactivated = false;
+	bool      block_caret = false;
+	bool      bar_branch = true;
 
 	// Formats editor's code with Ide format parameters
 	void FormatJSON_XML(bool xml);
@@ -794,6 +796,8 @@ public:
 	void      GotoPos(String path, int line);
 	void      GotoPos(String path, Point pos);
 
+	bool      GetLayoutItem(String& layout, String& item);
+
 	void      LoadAbbr();
 	void      SaveAbbr();
 
@@ -813,6 +817,7 @@ public:
 		void   Licenses();
 		void   Exit();
 		String GetOpposite();
+		String GetScratchPadFile();
 		void   GoOpposite();
 		void   Print();
 		void   DoDiff(FileDiff *diffdlg);
@@ -1125,7 +1130,6 @@ public:
 	void      AddFoundFile(const String& fn, int ln, const String& line, int pos, int count);
 	bool      SearchInFile(const String& fn, const String& pattern,
 		                   bool wholeword, bool ignorecase, RegExp *regexp);
-	void      SyncFindInFiles();
 	void      ConstructFindInFiles();
 	void      SerializeFindInFiles(Stream& s);
 
@@ -1276,6 +1280,8 @@ String UppHub();
 void   UppHubAuto(const String& s);
 
 void HighlightLine(const String& path, Vector<LineEdit::Highlight>& hln, const WString& ln);
+
+String GetGitBranchRaw(const String& dir);
 
 #include "urepo.h"
 

@@ -62,7 +62,7 @@ void SysImageReleased(const Image& img)
 
 void SetMakeImageCacheMax(int m)
 {
-	SetupValueCache(m, 0, 0.125);
+	SetupValueCache(m, m / 1000);
 }
 
 void  SetMakeImageCacheSize(int m)

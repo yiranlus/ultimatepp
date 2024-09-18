@@ -292,6 +292,7 @@ public:
 	virtual void   LeftDrag(Point p, dword flags);
 	virtual void   MouseMove(Point p, dword flags);
 	virtual void   MouseWheel(Point, int zdelta, dword);
+	virtual void   HorzMouseWheel(Point, int zdelta, dword);
 	virtual Image  CursorImage(Point, dword);
 	virtual void   DragAndDrop(Point p, PasteClip& d);
 	virtual void   DragRepeat(Point p);
@@ -353,6 +354,7 @@ protected:
 	bool             cutline;
 	bool             overwrite;
 	bool             showspaces;
+	bool             block_caret;
 	bool             showlines;
 	bool             showreadonly;
 	bool             warnwhitespace;
@@ -477,6 +479,7 @@ public:
 	bool      IsShowReadOnly()                { return showreadonly; }
 	LineEdit& ShowCurrentLine(Color color)    { hline = color; Refresh(); return *this; }
 	LineEdit& ShowCurrentColumn(Color color)  { vline = color; Refresh(); return *this; }
+	LineEdit& BlockCaret(bool b)              { block_caret = b; return *this; }
 	
 	LineEdit& SetScrollBarStyle(const ScrollBar::Style& s)   { sb.SetStyle(s); return *this; }
 

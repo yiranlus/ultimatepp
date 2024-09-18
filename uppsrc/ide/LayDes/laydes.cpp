@@ -194,7 +194,7 @@ void LayDes::PaintLayoutItems(Draw& w, int layid, Size size, Index<int>& passed,
 						break;
 					}
 				}
-		
+
 		if(show) {
 			w.Clipoff(r);
 			if(lrs[i] < 0)
@@ -291,7 +291,15 @@ void LayDes::MouseWheel(Point p, int zdelta, dword keyflags)
 		SetSb();
 	}
 	else
+	if(keyflags & K_SHIFT)
+		sb.WheelX(zdelta);
+	else
 		sb.WheelY(zdelta);
+}
+
+void LayDes::HorzMouseWheel(Point, int zdelta, dword)
+{
+	sb.WheelX(zdelta);
 }
 
 double LayDes::GetScale()
@@ -437,7 +445,7 @@ Ctrl::LogPos MakeLogPos(Ctrl::LogPos p, const Rect& r, Size sz)
 struct IDisplay : public Display {
 	Color paper, ink;
 	Font  font;
-	
+
 	Size GetStdSize(const Value& q) const {
 		Size sz = GetSmartTextSize(~q, font);
 		sz.cx += 2 * DPI(4);
@@ -921,7 +929,6 @@ void LayDes::RightDown(Point p, dword keyflags)
 	if(IsNull(currentlayout) || HasCapture()) return;
 	dragbase = Normalize(p);
 	MenuBar menu;
-	menu.MaxIconSize(Size(64, 64));
 	int h = StdFont().Info().GetHeight();
 	int w = 8 * h / 3;
 	menu.LeftGap(w + 2);
@@ -1387,10 +1394,10 @@ void LayDes::SortItems()
 			}
 	}
 	while(swap);
-	
+
 	int ii = cursor[0];
 	l.item.InsertPick(ii, pick(item));
-	
+
 	cursor.Clear();
 	for(int i = 0; i < count; i++)
 		cursor.Add(i + ii);
@@ -1596,9 +1603,9 @@ void LayDes::LayoutMenu(Bar& bar)
 	bool iscursor = list.IsCursor();
 	bar.Add("Add new layout..", THISBACK1(AddLayout, false));
 	bar.Add("Insert new layout..", THISBACK1(AddLayout, true));
-	bar.Add(iscursor, "Duplicate layout..", THISBACK(DuplicateLayout));
+	bar.Add(iscursor, "Duplicate layout..", LayImg::Duplicate(), THISBACK(DuplicateLayout));
 	bar.Add(iscursor, "Rename layout..", THISBACK(RenameLayout));
-	bar.Add(iscursor, "Remove layout..", THISBACK(RemoveLayout));
+	bar.Add(iscursor, "Remove layout..", LayImg::Remove(), THISBACK(RemoveLayout));
 	bar.Separator();
 	int q = list.GetKey();
 	bar.Add(iscursor && q > 0,

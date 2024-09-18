@@ -173,6 +173,11 @@ XmlTag& XmlTag::operator()(const char *attr, double q)
 	return operator()(attr, AsString(q));
 }
 
+XmlTag& XmlTag::operator()(const char *attr, float q)
+{
+	return operator()(attr, AsString(q));
+}
+
 force_inline
 String XmlParser::Convert(StringBuffer& b)
 {
@@ -681,6 +686,13 @@ double XmlParser::Double(const char *id, double def) const
 	return q < 0 ? def : ScanDouble(attr[q]);
 }
 
+float XmlParser::Float(const char *id, float def) const
+{
+	if(id == attr1) return ScanFloat(attrval1);
+	int q = attr.Find(id);
+	return q < 0 ? def : ScanFloat(attr[q]);
+}
+
 bool  XmlParser::IsText()
 {
 	if(npreserve || preserveall)
@@ -1134,7 +1146,7 @@ static void sAsXML(Stream& out, const XmlNode& node, dword style, const String& 
 			sAsXML(out, node.Node(i), style, indent);
 		break;
 	case XML_TEXT:
-		out << DeXml(node.GetText());
+		out << DeXml(node.GetText(), CHARSET_DEFAULT, style & XML_ESCAPELF);
 		break;
 	case XML_TAG:
 		XmlTag tag(node.GetText());
