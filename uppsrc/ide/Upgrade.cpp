@@ -26,11 +26,12 @@ void Ide::UpgradeTheIDE()
 
 	release.target_override = true;
 	release.target = newpath;
-#ifdef PLATFORM_WIN32
-	release.linkmode = 0;
-#else
-	release.linkmode = 1;
-#endif
+//#ifdef PLATFORM_WIN32
+// MSYS2 UCRT64 CLANG has problem linking statically
+//	release.linkmode = 0;
+//#else
+//	release.linkmode = 1;
+//#endif
 	release.createmap = false;
 	release.version.Clear();
 	release.def.blitz = false;

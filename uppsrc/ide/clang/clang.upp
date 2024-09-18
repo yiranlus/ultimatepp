@@ -3,9 +3,8 @@ description "\377B";
 uses
 	ide/Core;
 
-library(WIN32) libclang.lib;
-
-library(LCLANG) clang;
+library
+	clang;
 
 file
 	clang.h,

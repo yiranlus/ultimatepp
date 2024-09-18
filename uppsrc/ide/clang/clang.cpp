@@ -42,9 +42,11 @@ String GetClangInternalIncludes()
 			cpp_version = LibClangCppVersion;
 			String dummy = ConfigFile("dummy.cpp");
 			Upp::SaveFile(dummy, String());
+			
+			String clangpp_bin = GetExeDirFile("bin/clang/bin/c++");
 			String h = Sys(
 			#ifdef PLATFORM_WIN32
-					GetExeDirFile("bin/clang/bin/c++") +
+					(FileExists(clangpp_bin)? clangpp_bin: String{"clang++"}) +
 			#else
 					"clang++"
 			#endif
