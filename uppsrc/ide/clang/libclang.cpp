@@ -27,6 +27,10 @@ bool LoadLibClang(const char *dir)
 	if(LoadLibClang0(dir, "libclang.dylib"))
 		return true;
 #endif
+#ifdef PLATFORM_WIN32
+	if(LoadLibClang0(dir, "libclang.dll"))
+		return true;
+#endif
 	if(LoadLibClang0(dir, "libclang.so"))
 		return true;
 	for(int i = 0; i < 20; i++)

@@ -77,25 +77,29 @@ void   MscBuilder::AddFlags(Index<String>& cfg)
 	cfg.FindAdd("MSC");
 }
 
-String MscBuilder::CmdLine(const String& package, const Package& pkg)
+String MscBuilder::CompilerName() const
 {
-	String cc;
+	if(!IsNull(compiler)) return compiler;
 	if(HasFlag("ARM"))
-		cc = "clarm";
+		return "clarm";
 	else
 	if(HasFlag("MIPS"))
-		cc = "clmips";
+		return "clmips";
 	else
 	if(HasFlag("SH3"))
-		cc = "shcl /Qsh3";
+		return "shcl /Qsh3";
 	else
 	if(HasFlag("SH4"))
-		cc = "shcl /Qsh4";
+		return "shcl /Qsh4";
 	else
 	if(HasFlag("MSC8ARM"))
-		cc = "cl -GS- ";
-	else
-		cc = HasFlag("INTEL") ? "icl" : "cl";
+		return "cl -GS- ";
+	return HasFlag("INTEL") ? "icl" : "cl";
+}
+
+String MscBuilder::CmdLine(const String& package, const Package& pkg)
+{
+	String cc = CompilerName();
 // TRC 080605-documentation says Wp64 works in 32-bit compilation only
 //	cc << (IsMsc64() ? " -nologo -Wp64 -W3 -GR -c" : " -nologo -W3 -GR -c");
 	cc << " -nologo -W" << (pkg.nowarnings ? "0" : "3") << " -GR -c";
