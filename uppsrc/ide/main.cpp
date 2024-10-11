@@ -131,6 +131,10 @@ bool TryLoadLibClang()
 	if(LoadLibClang(GetExeFolder()))
 		return true;
 #endif
+#ifdef FLATPAK
+	if(LoadLibClang("/app/lib"))
+		return true;
+#endif
 	// in Mint 21.1, clang installed is 14 but llvm defaults to 15
 	for(String s : Split(Sys("clang --version"), [](int c)->int { return !IsDigit(c); })) {
 		int n = Atoi(s);
@@ -148,6 +152,8 @@ bool TryLoadLibClang()
 		CommandLineRemove(q, 2);
 	}
 	if(LoadLibClang(libdir))
+		return true;
+	if(LoadLibClang("/usr/lib64"))
 		return true;
 	if(LoadLibClang("/usr/lib"))
 		return true;
@@ -353,6 +359,7 @@ void AppMain___()
 		}
 
 		Ide ide;
+		SetTheIde(&ide);
 		ide.Maximize();
 		bool clset = false;
 		
@@ -441,6 +448,7 @@ void AppMain___()
 		DelTemps();
 		DeletePCHFiles();
 		ReduceCfgCache();
+		SetTheIde(nullptr);
 #ifndef _DEBUG
 	}
 	catch(const CParser::Error& e) {

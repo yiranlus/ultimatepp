@@ -147,6 +147,7 @@ public:
 	~PackedData();
 };
 
+/*
 template <class T, int N = 1>
 struct Link {
 	T *link_prev[N];
@@ -195,13 +196,56 @@ public:
 	}
 #endif
 };
+*/
 
+template <int N = 1>
+struct Link {
+	Link *link_prev[N];
+	Link *link_next[N];
+
+protected:
+	void LPN(int i)                      { link_prev[i]->link_next[i] = link_next[i]->link_prev[i] = this; }
+
+public:
+	Link       *GetNext(int i = 0)          { return link_next[i]; }
+	Link       *GetPrev(int i = 0)          { return link_prev[i]; }
+	const Link *GetNext(int i = 0) const    { return link_next[i]; }
+	const Link *GetPrev(int i = 0) const    { return link_prev[i]; }
+
+	void LinkSelf(int i = 0)     { link_next[i] = link_prev[i] = this; }
+	void LinkSelfAll()                   { for(int i = 0; i < N; i++) LinkSelf(i); }
+	void Unlink(int i = 0)               { link_next[i]->link_prev[i] = link_prev[i]; link_prev[i]->link_next[i] = link_next[i];
+	                                       LinkSelf(i); }
+	void UnlinkAll()                     { for(int i = 0; i < N; i++) Unlink(i); }
+	void LinkBefore(Link *n, int i = 0)  { link_next[i] = n; link_prev[i] = link_next[i]->link_prev[i]; LPN(i); }
+	void LinkAfter(Link *p, int i = 0)   { link_prev[i] = p; link_next[i] = link_prev[i]->link_next[i]; LPN(i); }
+
+	bool InList(int i = 0) const         { return link_next[i] != this; }
+	bool IsEmpty(int i = 0) const        { return !InList(i); }
+
+	Link()                               { LinkSelfAll(); }
+	~Link()                              { UnlinkAll(); }
+
+private:
+	Link(const Link&);
+	void operator=(const Link&);
+
+public:
+#ifdef _DEBUG
+	void Dump() {
+		for(auto *t = GetNext(); t != this; t = t->GetNext())
+			LOG(t);
+		LOG("-------------------------------------");
+	}
+#endif
+};
+/*
 template <class T, int N = 1>
 class LinkOwner : public Link<T, N> {
 public:
 	~LinkOwner()                         { Link<T, N>::DeleteList(); }
 };
-
+*/
 template <class T, class K = String>
 class LRUCache {
 public:
@@ -214,8 +258,8 @@ public:
 private:
 	struct Item : Moveable<Item> {
 		int    prev, next;
-		int    size; // TODO: size_t?
-		One<T> data; // TODO: Value?
+		int    size;
+		One<T> data;
 		bool   flag;
 	};
 	
@@ -259,8 +303,10 @@ public:
 	template <class P> bool RemoveOne(P predicate);
 
 	template <class B, class A>
-	T&   Get(const Maker& m, B before_make, A after_make);
-	T&   Get(const Maker& m) { return Get(m, []{}, []{}); }
+	T&   Get(const Maker& m, B before_make, A after_make, int& sz);
+	template <class B, class A>
+	T&   Get(const Maker& m, B before_make, A after_make) { int sz; return Get(m, before_make, after_make, sz); }
+	T&   Get(const Maker& m)                              { return Get(m, []{}, []{}); }
 
 	void Clear();
 

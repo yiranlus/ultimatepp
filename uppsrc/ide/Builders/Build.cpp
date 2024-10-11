@@ -263,7 +263,7 @@ String MakeBuild::OutDir(const Index<String>& cfg, const String& package, const 
 	Sort(x);
 	for(int i = 0; i < x.GetCount(); i++)
 		x[i] = InitCaps(x[i]);
-	String outdir = GetVar("OUTPUT");
+	String outdir = GetUppOut();
 	if(output_per_assembly)
 		outdir = AppendFileName(outdir, GetAssemblyId());
 	if(!use_target)
@@ -572,6 +572,13 @@ bool MakeBuild::Build()
 	One<Builder> builder = CreateBuilder(&host);
 	if(!builder)
 		return false;
+	String dummy;
+	String cc = builder->CompilerName();
+	if(cc.GetCount() && HostSys(cc + " --version", dummy)) {
+		PutConsole("Error: Cannot invoke compiler '" + cc + "'");
+		ConsoleShow();
+		return false;
+	}
 	Workspace wspc;
 	BuildWorkspace(wspc, host, *builder);
 	return Build(wspc, mainconfigparam, Null);

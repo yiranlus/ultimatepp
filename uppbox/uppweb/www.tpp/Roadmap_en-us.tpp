@@ -26,10 +26,176 @@ topic "Roadmap";
 [2 $$0,0#00000000000000000000000000000000:Default]
 [{_}%EN-US 
 [s2; Release history&]
-[s3; 2023.1 (rev. 16847) (May 2023)&]
+[s3; 2024 (rev. >17373) (Sep 2024)&]
+[s0;*/ &]
+[s0; [*/ Upcoming release]&]
+[s0;*/ &]
+[s0; Core&]
+[s0; &]
+[s0;i150;O0; First release of U`+`+ that requires C`+`+17&]
+[s0;i150;O0; Moveable concept redesigned with C`+`+17 features. U`+`+ 
+now allows non`-moveable types to be stored in Vector flavor 
+of containers (using Upp`::is`_upp`_guest). PODs are automatically 
+moveable (aka trivially relocatable)&]
+[s0;i150;O0; Upp`::Tuple now supports structured binding&]
+[s0;i150;O0; GetFileTime, GetFileLength, FileExists, DirectoryExists 
+and FileMapping refactored&]
+[s0;i150;O0; Stream`::GetAll now invokes LoadError on negative count&]
+[s0;i150;O0; ValueCache limits setting methods are simplified&]
+[s0;i150;O0; Value now directly supports `'float`' type&]
+[s0;i150;O0; Some iffy code now made more C`+`+ compliant (e.g. always 
+using memcpy for unaligned data)&]
+[s0;i150;O0; AsXML had new XML`_ESCAPELF&]
+[s0; &]
+[s0; plugin/Zip&]
+[s0; &]
+[s0;i150;O0; zip64 support&]
+[s0; &]
+[s0; Draw&]
+[s0; &]
+[s0;i150;O0; UHD image now can serve as source for SD image&]
+[s0;i150;O0; New S3 .iml image flag `- the images are drawn supersampled 
+3x, usually without antialiasing, and only downsampled at runtime&]
+[s5;po &]
+[s5;po Painter&]
+[s5;po &]
+[s5;i150;poO0; Multithreaded rendering further optimised&]
+[s5;i150;poO0; New image filtering parameter `- so far, rendering 
+image was always with bilinear filtering, new parameter allows 
+other Image filter like Lanczos 3&]
+[s5;po &]
+[s5;po CtrlCore&]
+[s5;po &]
+[s5;i150;poO0; Horizontal mouse scroll wheel support&]
+[s5;i150;poO0; CtrlMapper now provides operator()(Ctrl, T, const 
+T`& factor) for simple unit conversions&]
+[s5;i150;poO0; gtk backend improvements, XWayland mouse cursor bug 
+workaround&]
+[s5;po &]
+[s5;po CtrlLib&]
+[s5;po &]
+[s5;i150;poO0; CtrlMapper now provides operator()(Ctrl, T, const 
+T`& factor) for simple unit conversions&]
+[s5;po &]
+[s5;po ide&]
+[s5;po &]
+[s5;i150;poO0; Icon Designer refactored and optimised, new tools 
+added, S3 flag support added&]
+[s5;i150;poO0; Alt`-M now goes to special scratchpad file of the 
+same type as is current file, this is helpful e.g. for temporary 
+storing and editing parts of .iml images that are then composed 
+to the final image.&]
+[s5;i150;poO0; Output directory in assembly definition now can be 
+left empty and defaults to reasonable path.&]
+[s5;i150;poO0; Hexadecimal view is now much faster&]
+[s5;i150;poO0; Fixed further corner case Assist`+`+ problems&]
+[s5;i150;poO0; Layout designer text field, used with e.g. Labels, 
+now has Qtf button to edit text with RichEdit&]
+[s5;i150;poO0; Git file history now goes through renames&]
+[s5;i150;poO0; Compare with menu now suggests files in Download folder 
+too&]
+[s5;i150;poO0; Main package configuration dialog improved&]
+[s5;po &]
+[s5;po plugin upgrades&]
+[s0; &]
+[s0;i150;O0; plugin/sqlite3: 3.46.0&]
+[s5;i150;poO0; plugin/lzma: 24.6&]
+[s5;i150;poO0; plugin/zstd: 1.5.6&]
+[s5;i150;poO0; Core: LZ4 1.9.4&]
+[s5;i150;poO0; plugin/z: 1.3.1&]
+[s5;i150;poO0; plugin/png: 1.6.46&]
+[s5;i150;poO0; plugin/tif: 4.6.0&]
+[s5;i150;poO0; plugin/jpeg: 9f&]
+[s5;po &]
+[s5;po Win32&]
+[s5;po &]
+[s0;i150;O0; OpenSSL upgraded to 3.2.1&]
+[s5;i150;poO0; Clang compiler upgraded to 18.1.5&]
+[s5; &]
+[s5; &]
+[s3; 2023.2 (rev. 17045) (Oct 2023)&]
 [s0; &]
 [s0; [*/ Current stable release]&]
 [s0;*/ &]
+[s0; This is release is mostly focused on improving TheIDE capabilities.&]
+[s5; &]
+[s0;%- Core&]
+[s0;%- &]
+[s0;i150;O0;%- CParser`::ReadDoubleNoE (to ignore E part of double)&]
+[s0;i150;O0;%- CParser`::ReadIdh (with `'`-`' in id)&]
+[s0;%- &]
+[s0;%- Draw, CtrlLib&]
+[s0;%- &]
+[s0;i150;O0;%- StdDisplay (if CtrlLib is present) now supports `\1 
+qtf escape code&]
+[s0;%- &]
+[s0;%- RichEdit, RichText&]
+[s0;%- &]
+[s0;i150;O0;%- `"Paste without formatting`"&]
+[s0;i150;O0;%- Clipboard `'HTML format`' support&]
+[s0;i150;O0;%- GetPlainText allow`_tabs parameter; CtrlLib Prompt 
+now sometimes uses `'`\t`' to separate table cells.&]
+[s0;i150;O0;%- EncodeHTML strikeout support&]
+[s0;%- &]
+[s0;%- ide&]
+[s0;%- &]
+[s0;i150;O0;%- New C`+`+ sources indexer mode `- previoualy, after 
+each file change, all depended files were reindexed. That often 
+resulted in very heavy CPU load after each header change. In 
+the new mode, only the changed file is being reindexed `- while 
+less accurate, real problems in this new mode are actually rare 
+and it makes for much more responsive experience using theide.&]
+[s0;i150;O0;%- Many Assist cornercases fixed&]
+[s0;i150;O0;%- Result lists of Find in Files and Usage now have `"Replace`" 
+button which effectively brings the `"rename the entity`" functionality 
+(e.g. to rename method, find its Usage and then use Replace)&]
+[s0;i150;O0;%- Bottom pane was redesigned allowing for more Find 
+in Files and Usage result lists.&]
+[s0;i150;O0;%- Many improvements in source comparsions&]
+[s0;i150;O0;%- `"Show git history of file`" now allows for choosing 
+branches&]
+[s0;i150;O0;%- `"Compare with`" now suggests files with the same 
+name from other upp nests&]
+[s0;i150;O0;%- `"Compare directories`" now allows comparison with 
+git commit&]
+[s0;i150;O0;%- Various windows like comparisons are now non`-modal. 
+It is now e.g. possible to open multiple e.g. Directory comparison 
+windows&]
+[s0;i150;O0;%- Merge nests function got ability to specify target 
+folder. Default mode is now to `"import`" packages missing in 
+the first nest to `"imported`" subfolder of the first nest. The 
+idea is to create an assembly of first nest and its `"imported`" 
+subfolder to have imported packages fixed, while still allowing 
+the use of the very same packages from original sources with 
+another assembly.&]
+[s0;i150;O0;%- Visual improvements, UHD versions of many icons&]
+[s0;i150;O0;%- C`+`+ Language standard for assist (e.g. C`+`+ 17) 
+can now be selected in Assist setup&]
+[s0;i150;O0;%- Flow breaking commands (return, break, continue, goto, 
+co`_return, throw) now have specific syntax highlighting&]
+[s0;i150;O0;%- TheIDE now displays out`-of`-page function/class headers 
+in the first line of editor. This is helpful for quick orientation 
+when jumping into long function body.&]
+[s0;i150;O0;%- External changes for files now getting proper undo 
+records (previously undo history was lost when file was edited 
+outside of ide session)&]
+[s0;i150;O0;%- Repo sync git pull mode changed to `"merge`" (from 
+`"rebase`")&]
+[s0;i150;O0;%- U`+`+ Builder now defines bmGIT`_HASH (with git hash 
+of first nests HEAD, if it is git repo).&]
+[s0;i150;O0;%- [/ Copy with Syntax highlighting] function&]
+[s0;%- &]
+[s0;%- umk&]
+[s0;%- &]
+[s0;i150;O0;%- `-h option to automatically download missing packages 
+from UppHub if possible&]
+[s0;%- &]
+[s0;%- Win32:&]
+[s0;%- &]
+[s0;i150;O0;%- OpenSSL now upgraded to 1.1.1w&]
+[s5; &]
+[s3; 2023.1 (rev. 16847) (May 2023)&]
+[s0; &]
 [s0; The new release brings some long awaited features. As you might 
 remember for the last release we removed the old deprecated library 
 for code formatting. In the current release formatting is back 

@@ -510,6 +510,12 @@ void   Dump(const Ctrl *ctrl)
 		LOG("NULL");
 }
 
+void Ctrl::SetTitle(const char *s)
+{
+	TopWindow *w = GetTopWindow();
+	if(w) w->Title(s);
+}
+
 #endif
 
 bool Ctrl::IsOcxChild()
@@ -547,6 +553,7 @@ Ctrl::Ctrl() {
 	layout_id_literal = false;
 	top = false;
 	uparent = nullptr;
+	megarect = false;
 }
 
 void KillTimeCallbacks(void *id, void *idlim);

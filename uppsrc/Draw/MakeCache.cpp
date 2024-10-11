@@ -62,7 +62,7 @@ void SysImageReleased(const Image& img)
 
 void SetMakeImageCacheMax(int m)
 {
-	SetupValueCache(m, 0, 0.125);
+	SetupValueCache(m, m / 1000);
 }
 
 void  SetMakeImageCacheSize(int m)
@@ -148,7 +148,7 @@ struct sCachedRescale : public ImageMaker
 		ImageBuffer m(im);
 		m.SetHotSpot(sz * (img.GetHotSpot() - src.TopLeft()) / src.GetSize());
 		m.Set2ndSpot(sz * (img.Get2ndSpot() - src.TopLeft()) / src.GetSize());
-		return m;
+		return Image(m);
 	}
 };
 

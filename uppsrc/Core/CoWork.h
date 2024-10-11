@@ -1,5 +1,5 @@
 class CoWork : NoCopy {
-	struct MJob : Moveable<MJob>, Link<MJob, 2> {
+	struct MJob : Moveable<MJob>, Link<2> {
 		Function<void ()> fn;
 		CoWork           *work = NULL;
 		bool              looper = false;
@@ -9,8 +9,8 @@ class CoWork : NoCopy {
 
 public:
 	struct Pool {
-		MJob             *free;
-		Link<MJob, 2>     jobs;
+		Link<2>          *free;
+		Link<2>           jobs;
 		MJob              slot[SCHEDULED_MAX];
 		int               waiting_threads;
 		Array<Thread>     threads;
@@ -43,7 +43,7 @@ public:
 	static thread_local CoWork *current;
 
 	ConditionVariable  waitforfinish;
-	Link<MJob, 2>      jobs; // global stack and CoWork stack as double-linked lists
+	Link<2>            jobs; // global stack and CoWork stack as double-linked lists
 	int                todo;
 	bool               canceled;
 	std::exception_ptr exc = nullptr; // workaround for sanitizer bug(?)
@@ -68,16 +68,8 @@ public:
 
 	CoWork&  operator&(const Function<void ()>& fn)           { Do(fn); return *this; }
 	CoWork&  operator&(Function<void ()>&& fn)                { Do(pick(fn)); return *this; }
-	
-	void     Loop(Function<void ()>&& fn);
-	void     Loop(const Function<void ()>& fn)                { Loop(clone(fn)); }
 
-	CoWork&  operator*(const Function<void ()>& fn)           { Loop(fn); return *this; }
-	CoWork&  operator*(Function<void ()>&& fn)                { Loop(pick(fn)); return *this; }
-
-	int      Next()                                           { return ++index - 1; }
-
-	int  GetScheduledCount() const                            { return todo; }
+	int  GetScheduledCount() const;
 
 	static void FinLock();
 	
@@ -97,6 +89,15 @@ public:
 
 	CoWork();
 	~CoWork() noexcept(false);
+
+// deprecated:
+	void     Loop(Function<void ()>&& fn);
+	void     Loop(const Function<void ()>& fn)                { Loop(clone(fn)); }
+
+	CoWork&  operator*(const Function<void ()>& fn)           { Loop(fn); return *this; }
+	CoWork&  operator*(Function<void ()>&& fn)                { Loop(pick(fn)); return *this; }
+	
+	int      Next()                                           { return ++index - 1; }
 };
 
 struct CoWorkNX : CoWork {

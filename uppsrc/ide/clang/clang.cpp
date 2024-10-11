@@ -57,6 +57,9 @@ String GetClangInternalIncludes()
 			Vector<String> ln = Split(h, '\n');
 			for(int i = 0; i < ln.GetCount(); i++) {
 				String dir = TrimBoth(ln[i]);
+			#ifdef FLATPAK
+				dir.Replace("/usr", "/run/host/usr");
+			#endif
 				if(DirectoryExists(dir))
 					MergeWith(includes, ";", NormalizePath(dir));
 			}
@@ -102,7 +105,7 @@ bool Clang::Parse(const String& filename_, const String& content,
 	
 	String includes = includes_;
 	MergeWith(includes, ";", GetClangInternalIncludes());
-
+	
 	Vector<String> args;
 
 	INTERLOCKED // as there is just single static 'use'

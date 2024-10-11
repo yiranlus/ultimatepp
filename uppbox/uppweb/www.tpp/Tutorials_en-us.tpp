@@ -53,9 +53,21 @@ Tutorial] `- get knowledge about drawing custom content inside
 window or control.&]
 [s3;l160;i150;O0; [*^topic`:`/`/Draw`/srcdoc`/ImgTutorial`$en`-us^ Image 
 Tutorial] `- check out the mechanism behind the image manipulation.&]
+[s3;l160;i150;O0; [*^topic`:`/`/Core`/srcdoc`/NetworkTutorial`_en`-us^ Network 
+Tutorial] `- learn how to use U`+`+ core components for network 
+application creation.&]
 [s3;l160;i150;O0; [*^topic`:`/`/Sql`/srcdoc`/tutorial`$en`-us^ Sql 
 Tutorial] `- introduction to using databases within U`+`+ framework.&]
 [s0; &]
+[s2; Books&]
+[s3; If you are looking for books about the U`+`+ framework, here 
+is a list of books we recommend:&]
+[s3;l160;i150;O0; [*^https`:`/`/www`.amazon`.com`/dp`/B0CQHX84VZ`/^ Getting 
+started with the U`+`+ Framework] `- the book written by Frederik 
+Dumarey and reviewed by the main authors of U`+`+. It is an excellent 
+starting point for anyone new to the framework. Also, if you 
+are an experienced U`+`+ developer, you will find much valuable 
+content, including a deep dive into Skylark and Turtle.&]
 [s2; Articles&]
 [s3; The are also set of world class articles created by U`+`+ authors 
 from which you can learn:&]

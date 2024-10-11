@@ -565,6 +565,7 @@ private:
 	bool         layout_id_literal:1; // info_ptr points to layout char * literal, no heap involved
 	bool         multi_frame:1; // there is more than single frame, they are stored in heap
 	bool         top:1;
+	bool         megarect:1; // support for large virtual screen area - SetRect > 16000
 
 	static  Ptr<Ctrl> eventCtrl;
 	static  Ptr<Ctrl> mouseCtrl;
@@ -756,6 +757,9 @@ private:
 	void         FreeFrames()           { if(multi_frame) MemoryFree(frame.frames); }
 	Frame        AllocFrames(int alloc);
 	
+	Rect         OffsetMegaRect(Rect r) const;
+	void         MegaRect(Rect& r);
+	
 	PackedData& Attrs();
 
 
@@ -828,6 +832,8 @@ protected:
 		ATTR_HELPLINE,
 		ATTR_DESCRIPTION,
 		ATTR_HELPTOPIC,
+		ATTR_MEGARECT_X,
+		ATTR_MEGARECT_Y,
 		ATTR_LAST
 	};
 	
@@ -882,6 +888,7 @@ public:
 		MOUSELEAVE    = 0x30,
 		CURSORIMAGE   = 0x40,
 		MOUSEWHEEL    = 0x50,
+		MOUSEHWHEEL   = 0x60,
 
 		DOWN          = 0x80,
 		UP            = 0x90,
@@ -987,6 +994,7 @@ public:
 	virtual void   MiddleHold(Point p, dword keyflags);
 	virtual void   MiddleUp(Point p, dword keyflags);
 	virtual void   MouseWheel(Point p, int zdelta, dword keyflags);
+	virtual void   HorzMouseWheel(Point p, int zdelta, dword keyflags);
 	virtual void   MouseLeave();
 	
 	virtual void   Pen(Point p, const PenInfo& pen, dword keyflags);
@@ -1422,6 +1430,8 @@ public:
 	virtual void   Dump(Stream& s) const;
 
 	static bool LogMessages;
+	
+	void    SetTitle(const char *s);
 #endif
 
 	static void ShowRepaint(int ms);
